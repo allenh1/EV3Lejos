@@ -2,7 +2,7 @@
 
 namespace ev3_server {
 
-const QString myAddress = QString("10.0.0.30");//set up the IP for this computer
+const QString myAddress = QString("192.168.20.2");//set up the IP for this computer
 
 Ev3Listener::Ev3Listener(int argc, char** argv, QObject* pParent)
     :	QObject(pParent)

@@ -13,11 +13,13 @@ project(EV3Lejos)
 find_package(catkin REQUIRED COMPONENTS roscpp )#qt_build roscpp)
 find_package(Qt5 COMPONENTS Core Gui Network Widgets)
 include_directories(${catkin_INCLUDE_DIRS})
-include_directories(${Qt5Widgets_INCLUDE_DIRS})
+include_directories(${Qt5Widgets_INCLUDES})
+add_definitions(${Qt5Widgets_DEFINITIONS})
 # Use this to define what the package will export (e.g. libs, headers).
 # Since the default here is to produce only a binary, we don't worry about
 # exporting anything. 
 catkin_package()
+add_definitions(-fPIC)
 
 ##############################################################################
 # Qt Environment
@@ -26,7 +28,8 @@ catkin_package()
 # this comes from qt_build's qt-ros.cmake which is automatically 
 # included via the dependency call in package.xml
 #rosbuild_prepare_qt5(Core Gui Network) # Add the appropriate components to the component list here
-SET(QT_USE_QTNETWORK)
+set(QT_USE_QTNETWORK)
+set(CMAKE_CXX_FLAGS "${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 ##############################################################################
 # Sections
 ##############################################################################
@@ -50,6 +53,6 @@ file(GLOB_RECURSE QT_SOURCES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} FOLLOW_SYMLINK
 ##############################################################################
 
 add_executable(EV3Lejos ${QT_SOURCES} ${QT_RESOURCES_CPP} ${QT_FORMS_HPP} ${QT_MOC_HPP})
-target_link_libraries(EV3Lejos ${Qt5Widgets_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(EV3Lejos ${Qt5Widgets_LIBRARIES} ${Qt5Network_LIBRARIES} ${catkin_LIBRARIES})
 install(TARGETS EV3Lejos RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 

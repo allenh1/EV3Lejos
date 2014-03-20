@@ -1,7 +1,10 @@
 #ifndef EV3_LISTENER_H
 #define EV3_LISTENER_H
 
-#include <QtNetwork>//provides QTcpServer
+#include <QtNetwork/QtNetwork> //provides TCP stuffs
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
+#include <QtWidgets>
 #include <QObject>
 #include <QString>
 #include <iostream>
