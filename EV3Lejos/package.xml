@@ -3,11 +3,10 @@
   <name>EV3Lejos</name>
   <version>0.1.0</version>
   <description>
-
-     EV3Lejos
-
+   A simple interface that allows the Lego EV3 Robot to be used 
+   with the ROS libraries.
   </description>
-  <maintainer email="Hunter Allen@gmail.com">Hunter Allen</maintainer>
+  <maintainer email="Hunter.Allen@Vanderbilt.Edu">Hunter Allen</maintainer>
   <author>Hunter Allen</author>
   <license>BSD</license>
   <!-- <url type="bugtracker">https://github.com/stonier/qt_ros/issues</url> -->
@@ -17,9 +16,9 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>qt_build</build_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>libqt4-dev</build_depend>
+  <build_depend>libqt5-dev</build_depend>
   <run_depend>qt_build</run_depend>
   <run_depend>roscpp</run_depend>
-  <run_depend>libqt4-dev</run_depend>
+  <run_depend>libqt5-dev</run_depend>
  
 </package>

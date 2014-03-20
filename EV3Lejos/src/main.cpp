@@ -1,32 +1,16 @@
-/**
- * @file /src/main.cpp
- *
- * @brief Qt based gui.
- *
- * @date November 2010
- **/
-/*****************************************************************************
-** Includes
-*****************************************************************************/
+#include "EV3Listener.h"
+#include <QCoreApplication>
 
-#include <QtGui>
-#include <QApplication>
-#include "../include/EV3Lejos/main_window.hpp"
+using namespace ev3_server;
 
-/*****************************************************************************
-** Main
-*****************************************************************************/
+int main(int argc, char** argv){
+	
+	QCoreApplication app(argc, argv);
 
-int main(int argc, char **argv) {
+    Ev3Listener s(argc, argv);//construct the server
 
-    /*********************
-    ** Qt
-    **********************/
-    QApplication app(argc, argv);
-    EV3Lejos::MainWindow w(argc,argv);
-    w.show();
-    app.connect(&app, SIGNAL(lastWindowClosed()), &app, SLOT(quit()));
-    int result = app.exec();
-
-	return result;
-}
+	//for(;;)
+	//	;
+	//system("pause");
+	return app.exec();//execute the application. Quit when server exits.
+}//end main.
