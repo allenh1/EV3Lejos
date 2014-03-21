@@ -8,7 +8,11 @@ Ev3Listener::Ev3Listener(int argc, char** argv, QObject* pParent)
     :	QObject(pParent)
 {
 
-    m_pTcpServer = new QTcpServer(this); //create the TcpServer 
+    connect(this, SIGNAL(emitXVel(double), m_pPubThread, SLOT(setXVel(double));
+    connect(this, SIGNAL(emitYVel(double), m_pPubThread, SLOT(setYVel(double));
+    connect(this, SIGNAL(emitThVel(double), m_pPubThread, SLOT(setThVel(double));
+
+    m_pTcpServer = new QTcpServer(this); //create the TcpServer
 
     if (!m_pTcpServer->listen(QHostAddress(myAddress), 5512)) 
     {
@@ -66,36 +70,6 @@ void Ev3Listener::NewClientCommand()
     QTcpSocket * pClientSocket = qobject_cast<QTcpSocket *>(sender());
     pClientSocket->waitForBytesWritten(1000);
     line = pClientSocket->readAll();
-    // while (!line.contains(QString('@')))
-    // {
-    //     line += pClientSocket->readLine();
-    //     std::cout<<"\t waiting for bytes written...\n";
-    //     waitForBytesWritten();
-    // }
-
-    // while(pClientSocket->bytesAvailable() > 0) 
-    // {
-    //     //length = static_cast<int>(pClientSocket->read(1).at(0));	// Read the command size.
-    //     QString line = "";
-
-    //     bool endOfLine = false;
-    //     bool endOfStream = false;
-    //     int bytesAvail = pClientSocket->bytesAvailable();
-
-    //     while ((!endOfLine) && (!endOfStream)) 
-    //     {
-    //         char ch;
-    //         int bytesRead = pClientSocket->read(&ch, sizeof(ch));
-    //         if (bytesRead == sizeof(ch)) {
-    //             if (ch != '@')
-    //                 line.append(ch);
-
-    //             if (ch == '@')
-    //                 endOfLine = true;
-    //         }//end if
-    //         else { endOfStream = true; }//done reading
-    //     }//end while
-
 
         std::cout<<"New message received: " + line.toStdString() + "\n";
 

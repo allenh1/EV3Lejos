@@ -10,7 +10,7 @@ project(EV3Lejos)
 ##############################################################################
 
 # qt_build provides the qt cmake glue, roscpp the comms for a default talker
-find_package(catkin REQUIRED COMPONENTS roscpp )#qt_build roscpp)
+find_package(catkin REQUIRED COMPONENTS roscpp tf nav_msgs)#qt_build roscpp)
 find_package(Qt5 COMPONENTS Core Gui Network Widgets)
 include_directories(${catkin_INCLUDE_DIRS})
 include_directories(${Qt5Widgets_INCLUDES})

@@ -9,6 +9,8 @@
 #include <QString>
 #include <iostream>
 
+#include "OdometryPublisherThread.h" //thread for publishing the odometry
+
 QT_BEGIN_NAMESPACE
 class QTcpServer;
 QT_END_NAMESPACE
@@ -22,15 +24,20 @@ class Ev3Listener : public QObject {
 
 public:
     Ev3Listener(int argc, char** argv, QObject* pParent = NULL);
-    //~Server();
 
     void writeData();
+
+    Q_SIGNAL void emitXVel(double);
+    Q_SIGNAL void emitYVel(double);
+    Q_SIGNAL void emitThVel(double);
+
 private Q_SLOTS:
 	void NewClientConnection();
 	void NewClientCommand();
 
 private:
     QTcpServer* m_pTcpServer;
+    Ev3OdomPublisher* m_pPubThread;
 };//end class Ev3Listener
 
 }//end namespace ev3_server
