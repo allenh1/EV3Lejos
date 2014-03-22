@@ -1,13 +1,10 @@
-#ifndef ODOM_PUB_H
-#define ODOM_PUB_H
-
-namespace ev3_server {
+#ifndef ODOM_PUB___H
+#define ODOM_PUB___H
 
 /** Include Qt Dependencies **/
 #include <QThread>
 #include <QObject>
 #include <QString>
-#include <QMutex>
 
 /** Include ROS Headers **/
 #include <ros/ros.h>
@@ -27,9 +24,10 @@ public:
 
     void run(); //run loop for the thread
 
-    Q_SLOT void setXVel(double xVel);
-    Q_SLOT void setYVel(double yVel);
-    Q_SLOT void setThVel(double thVel);
+private Q_SLOTS:
+    void setXVel(double xVel);
+    void setYVel(double yVel);
+    void setThVel(double thVel);
 
 private:
     int m_Init_argc;
@@ -43,13 +41,7 @@ private:
     double m_yPose;
     double m_thPose;
 
-    QMutex m_mutex;
-
     ros::Publisher m_odom_pub;
-    ros::Time m_currentTime;
-    ros::Time m_lastTime;
 };
-
-}
 
 #endif

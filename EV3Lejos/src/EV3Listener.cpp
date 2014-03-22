@@ -1,11 +1,10 @@
 #include "EV3Listener.h"//class file
 
-namespace ev3_server {
-
 const QString myAddress = QString("192.168.20.2");//set up the IP for this computer
 
 Ev3Listener::Ev3Listener(int argc, char** argv, QObject* pParent)
-    :	QObject(pParent)
+    :	QObject(pParent),
+      m_PubThread(argc, argv)
 {
 
     m_pTcpServer = new QTcpServer(this); //create the TcpServer
@@ -30,15 +29,12 @@ Ev3Listener::Ev3Listener(int argc, char** argv, QObject* pParent)
     connect(m_pTcpServer, SIGNAL(newConnection()), SLOT(NewClientConnection()));
     /** TODO: Start the ROS state publishing **/
 
-    m_pPubThread = new Ev3OdomPublisher(argc, argv);
-    m_pPubThread = new Ev3OdomPublisher(argc, argv);
+    m_PubThread.init();//initialize ROS
+    m_PubThread.start();//begin publisher thread
 
-    m_pPubThread->init();
-    m_pPubThread->start();
-
-    connect(this, SIGNAL(emitXVel(double)), m_pPubThread, SLOT(setXVel(double));
-    connect(this, SIGNAL(emitYVel(double)), m_pPubThread, SLOT(setYVel(double));
-    connect(this, SIGNAL(emitThVel(double)), m_pPubThread, SLOT(setThVel(double));
+    connect(this, SIGNAL(emitXVel(double)), &m_PubThread, SLOT(setXVel(double));
+    connect(this, SIGNAL(emitYVel(double)), &m_PubThread, SLOT(setYVel(double));
+    connect(this, SIGNAL(emitThVel(double)), &m_PubThread, SLOT(setThVel(double));
 }//end constructor
 
 void Ev3Listener::NewClientConnection() 
@@ -77,8 +73,5 @@ void Ev3Listener::NewClientCommand()
         std::cout<<"New message received: " + line.toStdString() + "\n";
 
         /** Ok. At this point, the client has sent a message. 
-            Now we must determine the contents of said message. **/
-    //}//this runs while the server has a message.   
+            Now we must determine the contents of said message. **/  
 }//controls the new message.
-
-}//end namespace ev3_listener

@@ -1,21 +1,7 @@
 #ifndef EV3_LISTENER_H
 #define EV3_LISTENER_H
 
-#include <QtNetwork/QtNetwork> //provides TCP stuffs
-#include <QtNetwork/QTcpServer>
-#include <QtNetwork/QTcpSocket>
-#include <QtWidgets>
-#include <QObject>
-#include <QString>
-#include <iostream>
-
 #include "OdometryPublisherThread.h" //thread for publishing the odometry
-
-QT_BEGIN_NAMESPACE
-class QTcpServer;
-QT_END_NAMESPACE
-
-namespace ev3_server {
 
 #define PI 3.1415926535898
 
@@ -37,8 +23,12 @@ private Q_SLOTS:
 
 private:
     QTcpServer* m_pTcpServer;
-    Ev3OdomPublisher* m_pPubThread;
+    Ev3OdomPublisher m_PubThread;
 };//end class Ev3Listener
 
-}//end namespace ev3_server
+#include <QtNetwork/QtNetwork> //provides TCP stuffs
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
+#include <iostream>
+
 #endif
