@@ -8,10 +8,6 @@ Ev3Listener::Ev3Listener(int argc, char** argv, QObject* pParent)
     :	QObject(pParent)
 {
 
-    connect(this, SIGNAL(emitXVel(double), m_pPubThread, SLOT(setXVel(double));
-    connect(this, SIGNAL(emitYVel(double), m_pPubThread, SLOT(setYVel(double));
-    connect(this, SIGNAL(emitThVel(double), m_pPubThread, SLOT(setThVel(double));
-
     m_pTcpServer = new QTcpServer(this); //create the TcpServer
 
     if (!m_pTcpServer->listen(QHostAddress(myAddress), 5512)) 
@@ -34,8 +30,15 @@ Ev3Listener::Ev3Listener(int argc, char** argv, QObject* pParent)
     connect(m_pTcpServer, SIGNAL(newConnection()), SLOT(NewClientConnection()));
     /** TODO: Start the ROS state publishing **/
 
-    // m_RobotThread.init();
-    // m_RobotThread.start();
+    m_pPubThread = new Ev3OdomPublisher(argc, argv);
+    m_pPubThread = new Ev3OdomPublisher(argc, argv);
+
+    m_pPubThread->init();
+    m_pPubThread->start();
+
+    connect(this, SIGNAL(emitXVel(double)), m_pPubThread, SLOT(setXVel(double));
+    connect(this, SIGNAL(emitYVel(double)), m_pPubThread, SLOT(setYVel(double));
+    connect(this, SIGNAL(emitThVel(double)), m_pPubThread, SLOT(setThVel(double));
 }//end constructor
 
 void Ev3Listener::NewClientConnection() 

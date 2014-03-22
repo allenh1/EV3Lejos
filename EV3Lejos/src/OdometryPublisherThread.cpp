@@ -2,6 +2,8 @@
 
 namespace ev3_server {
 
+//tf::TransformBroadcaster odom_broadcaster;
+
 Ev3OdomPublisher::Ev3OdomPublisher(int argc, char **pArgv)
     : m_Init_argc(argc),
       m_pInit_argv(pArgv)
@@ -36,7 +38,6 @@ void Ev3OdomPublisher::run()
 {
     ros::Rate loop_rate(1);
 
-    tf::TransformBroadcaster odom_broadcaster;
     m_currentTime = ros::Time::now();
     m_lastTime = ros::Time::now();
 
@@ -62,18 +63,18 @@ void Ev3OdomPublisher::run()
         geometry_msgs::Quaternion odom_quat = tf::createQuaternionFromYaw(m_thPose);
 
         //publish the transform over tf
-        geometry_msgs::TransformStamped odom_trans;
-        odom_trans.header.stamp = current_time;
-        odom_trans.header.frame_id = "odom";
-        odom_trans.child_frame_id = "base_link";
+        // geometry_msgs::TransformStamped odom_trans;
+        // odom_trans.header.stamp = current_time;
+        // odom_trans.header.frame_id = "odom";
+        // odom_trans.child_frame_id = "base_link";
 
-        odom_trans.transform.translation.x = m_xPose;
-        odom_trans.transform.translation.y = m_yPose;
-        odom_trans.transform.translation.z = 0.0;
-        odom_trans.transform.rotation = odom_quat;
+        // odom_trans.transform.translation.x = m_xPose;
+        // odom_trans.transform.translation.y = m_yPose;
+        // odom_trans.transform.translation.z = 0.0;
+        // odom_trans.transform.rotation = odom_quat;
 
-        //publish the transform
-        odom_broadcaster.sendTransform(odom_trans);
+        // //publish the transform
+        // odom_broadcaster.sendTransform(odom_trans);
 
         //publish the odometry message
         nav_msgs::Odometry odom_msg;
